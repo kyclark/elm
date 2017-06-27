@@ -27,6 +27,7 @@ type Msg
 
 type alias Model =
     { slots : List Slot
+    , goal : List Slot
     , msg : String
     , previousStates : List (List Slot)
     , numberOfMoves : Int
@@ -36,10 +37,13 @@ type alias Model =
 
 initialModel : Int -> Model
 initialModel numberOfFrogs =
-    { slots =
-        List.repeat numberOfFrogs LeftFrog
-            ++ [ Space ]
-            ++ List.repeat numberOfFrogs RightFrog
+    let
+        slots =
+            List.repeat numberOfFrogs LeftFrog
+                ++ [ Space ]
+                ++ List.repeat numberOfFrogs RightFrog
+    in
+    { slots = slots
     , msg =
         "Click on a frog to make it move. Frogs can only "
             ++ "move in the direction they are facing and only to an "
@@ -47,6 +51,7 @@ initialModel numberOfFrogs =
     , previousStates = []
     , numberOfMoves = 0
     , numberOfFrogs = numberOfFrogs
+    , goal = List.reverse slots
     }
 
 
@@ -97,9 +102,19 @@ view model =
             [ button [ onClick Undo ] [ text "Undo" ]
             , button [ onClick Reset ] [ text "Reset" ]
             ]
+        , div [] [ text (wonYet model) ]
 
         -- , div [] [ text <| "Model: " ++ toString model ]
         ]
+
+
+wonYet model =
+    case model.slots == model.goal of
+        True ->
+            "YOU WON!"
+
+        _ ->
+            ""
 
 
 viewSlots : List Slot -> Html Msg
