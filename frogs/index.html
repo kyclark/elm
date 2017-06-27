@@ -10338,6 +10338,14 @@ var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
+var _user$project$Main$wonYet = function (model) {
+	var _p0 = _elm_lang$core$Native_Utils.eq(model.slots, model.goal);
+	if (_p0 === true) {
+		return 'YOU WON!';
+	} else {
+		return '';
+	}
+};
 var _user$project$Main$numberOption = function (n) {
 	var v = _elm_lang$core$Basics$toString(n);
 	return A2(
@@ -10355,77 +10363,12 @@ var _user$project$Main$numberOption = function (n) {
 };
 var _user$project$Main$defaultNumberOfFrogs = 3;
 var _user$project$Main$rangeOfFrogs = A2(_elm_lang$core$List$range, 3, 6);
-var _user$project$Main$Model = F5(
-	function (a, b, c, d, e) {
-		return {slots: a, msg: b, previousStates: c, numberOfMoves: d, numberOfFrogs: e};
+var _user$project$Main$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {slots: a, goal: b, msg: c, previousStates: d, numberOfMoves: e, numberOfFrogs: f};
 	});
 var _user$project$Main$Space = {ctor: 'Space'};
 var _user$project$Main$leftFrogLeap = function (slots) {
-	var _p0 = slots;
-	_v0_3:
-	do {
-		if ((_p0.ctor === '::') && (_p0._1.ctor === '::')) {
-			if (_p0._1._1.ctor === '::') {
-				if (_p0._1._1._1.ctor === '[]') {
-					if (_p0._1._0.ctor === 'Space') {
-						return {
-							ctor: '::',
-							_0: _user$project$Main$Space,
-							_1: {
-								ctor: '::',
-								_0: _p0._0,
-								_1: {
-									ctor: '::',
-									_0: _p0._1._1._0,
-									_1: {ctor: '[]'}
-								}
-							}
-						};
-					} else {
-						if (_p0._1._1._0.ctor === 'Space') {
-							return {
-								ctor: '::',
-								_0: _user$project$Main$Space,
-								_1: {
-									ctor: '::',
-									_0: _p0._1._0,
-									_1: {
-										ctor: '::',
-										_0: _p0._0,
-										_1: {ctor: '[]'}
-									}
-								}
-							};
-						} else {
-							break _v0_3;
-						}
-					}
-				} else {
-					break _v0_3;
-				}
-			} else {
-				if (_p0._1._0.ctor === 'Space') {
-					return {
-						ctor: '::',
-						_0: _user$project$Main$Space,
-						_1: {
-							ctor: '::',
-							_0: _p0._0,
-							_1: {ctor: '[]'}
-						}
-					};
-				} else {
-					break _v0_3;
-				}
-			}
-		} else {
-			break _v0_3;
-		}
-	} while(false);
-	return slots;
-};
-var _user$project$Main$rightFrogLeap = function (slots) {
-	var foo = A2(_elm_lang$core$Debug$log, 'slots', slots);
 	var _p1 = slots;
 	_v1_3:
 	do {
@@ -10435,28 +10378,28 @@ var _user$project$Main$rightFrogLeap = function (slots) {
 					if (_p1._1._0.ctor === 'Space') {
 						return {
 							ctor: '::',
-							_0: _p1._0,
+							_0: _user$project$Main$Space,
 							_1: {
 								ctor: '::',
-								_0: _p1._1._1._0,
+								_0: _p1._0,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Main$Space,
+									_0: _p1._1._1._0,
 									_1: {ctor: '[]'}
 								}
 							}
 						};
 					} else {
-						if (_p1._0.ctor === 'Space') {
+						if (_p1._1._1._0.ctor === 'Space') {
 							return {
 								ctor: '::',
-								_0: _p1._1._1._0,
+								_0: _user$project$Main$Space,
 								_1: {
 									ctor: '::',
 									_0: _p1._1._0,
 									_1: {
 										ctor: '::',
-										_0: _user$project$Main$Space,
+										_0: _p1._0,
 										_1: {ctor: '[]'}
 									}
 								}
@@ -10469,13 +10412,13 @@ var _user$project$Main$rightFrogLeap = function (slots) {
 					break _v1_3;
 				}
 			} else {
-				if (_p1._0.ctor === 'Space') {
+				if (_p1._1._0.ctor === 'Space') {
 					return {
 						ctor: '::',
-						_0: _p1._1._0,
+						_0: _user$project$Main$Space,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Main$Space,
+							_0: _p1._0,
 							_1: {ctor: '[]'}
 						}
 					};
@@ -10489,27 +10432,92 @@ var _user$project$Main$rightFrogLeap = function (slots) {
 	} while(false);
 	return slots;
 };
+var _user$project$Main$rightFrogLeap = function (slots) {
+	var foo = A2(_elm_lang$core$Debug$log, 'slots', slots);
+	var _p2 = slots;
+	_v2_3:
+	do {
+		if ((_p2.ctor === '::') && (_p2._1.ctor === '::')) {
+			if (_p2._1._1.ctor === '::') {
+				if (_p2._1._1._1.ctor === '[]') {
+					if (_p2._1._0.ctor === 'Space') {
+						return {
+							ctor: '::',
+							_0: _p2._0,
+							_1: {
+								ctor: '::',
+								_0: _p2._1._1._0,
+								_1: {
+									ctor: '::',
+									_0: _user$project$Main$Space,
+									_1: {ctor: '[]'}
+								}
+							}
+						};
+					} else {
+						if (_p2._0.ctor === 'Space') {
+							return {
+								ctor: '::',
+								_0: _p2._1._1._0,
+								_1: {
+									ctor: '::',
+									_0: _p2._1._0,
+									_1: {
+										ctor: '::',
+										_0: _user$project$Main$Space,
+										_1: {ctor: '[]'}
+									}
+								}
+							};
+						} else {
+							break _v2_3;
+						}
+					}
+				} else {
+					break _v2_3;
+				}
+			} else {
+				if (_p2._0.ctor === 'Space') {
+					return {
+						ctor: '::',
+						_0: _p2._1._0,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Main$Space,
+							_1: {ctor: '[]'}
+						}
+					};
+				} else {
+					break _v2_3;
+				}
+			}
+		} else {
+			break _v2_3;
+		}
+	} while(false);
+	return slots;
+};
 var _user$project$Main$handleClick = F2(
 	function (index, slots) {
 		var thisSlot = A2(_elm_community$list_extra$List_Extra$getAt, index, slots);
-		var _p2 = thisSlot;
-		if (_p2.ctor === 'Nothing') {
+		var _p3 = thisSlot;
+		if (_p3.ctor === 'Nothing') {
 			return {ctor: '_Tuple2', _0: slots, _1: 'Cannot move non-existing slot'};
 		} else {
-			if (_p2._0.ctor === 'Space') {
+			if (_p3._0.ctor === 'Space') {
 				return {ctor: '_Tuple2', _0: slots, _1: 'Cannot move the space'};
 			} else {
 				var window = 3;
-				var _p3 = function () {
-					var _p4 = thisSlot;
-					_v3_2:
+				var _p4 = function () {
+					var _p5 = thisSlot;
+					_v4_2:
 					do {
-						if (_p4.ctor === 'Just') {
-							switch (_p4._0.ctor) {
+						if (_p5.ctor === 'Just') {
+							switch (_p5._0.ctor) {
 								case 'LeftFrog':
-									var _p5 = A2(_elm_community$list_extra$List_Extra$splitAt, index, slots);
-									var before = _p5._0;
-									var at = _p5._1;
+									var _p6 = A2(_elm_community$list_extra$List_Extra$splitAt, index, slots);
+									var before = _p6._0;
+									var at = _p6._1;
 									return {
 										ctor: '_Tuple3',
 										_0: before,
@@ -10517,8 +10525,8 @@ var _user$project$Main$handleClick = F2(
 										_2: A2(_elm_lang$core$List$drop, window, at)
 									};
 								case 'RightFrog':
-									var _p6 = index;
-									switch (_p6) {
+									var _p7 = index;
+									switch (_p7) {
 										case 0:
 											return {
 												ctor: '_Tuple3',
@@ -10535,9 +10543,9 @@ var _user$project$Main$handleClick = F2(
 											};
 										default:
 											var twoBefore = index - (window - 1);
-											var _p7 = A2(_elm_community$list_extra$List_Extra$splitAt, twoBefore, slots);
-											var x = _p7._0;
-											var y = _p7._1;
+											var _p8 = A2(_elm_community$list_extra$List_Extra$splitAt, twoBefore, slots);
+											var x = _p8._0;
+											var y = _p8._1;
 											return {
 												ctor: '_Tuple3',
 												_0: x,
@@ -10546,10 +10554,10 @@ var _user$project$Main$handleClick = F2(
 											};
 									}
 								default:
-									break _v3_2;
+									break _v4_2;
 							}
 						} else {
-							break _v3_2;
+							break _v4_2;
 						}
 					} while(false);
 					return {
@@ -10559,32 +10567,32 @@ var _user$project$Main$handleClick = F2(
 						_2: {ctor: '[]'}
 					};
 				}();
-				var slotsBefore = _p3._0;
-				var leapSlots = _p3._1;
-				var slotsAfter = _p3._2;
+				var slotsBefore = _p4._0;
+				var leapSlots = _p4._1;
+				var slotsAfter = _p4._2;
 				var message = function () {
-					var _p8 = A2(_elm_lang$core$List$member, _user$project$Main$Space, leapSlots);
-					if (_p8 === true) {
+					var _p9 = A2(_elm_lang$core$List$member, _user$project$Main$Space, leapSlots);
+					if (_p9 === true) {
 						return '';
 					} else {
 						return 'No place for the frog to move!';
 					}
 				}();
 				var newLeapSlots = function () {
-					var _p9 = thisSlot;
-					_v6_2:
+					var _p10 = thisSlot;
+					_v7_2:
 					do {
-						if (_p9.ctor === 'Just') {
-							switch (_p9._0.ctor) {
+						if (_p10.ctor === 'Just') {
+							switch (_p10._0.ctor) {
 								case 'LeftFrog':
 									return _user$project$Main$leftFrogLeap(leapSlots);
 								case 'RightFrog':
 									return _user$project$Main$rightFrogLeap(leapSlots);
 								default:
-									break _v6_2;
+									break _v7_2;
 							}
 						} else {
-							break _v6_2;
+							break _v7_2;
 						}
 					} while(false);
 					return {ctor: '[]'};
@@ -10603,25 +10611,27 @@ var _user$project$Main$handleClick = F2(
 var _user$project$Main$RightFrog = {ctor: 'RightFrog'};
 var _user$project$Main$LeftFrog = {ctor: 'LeftFrog'};
 var _user$project$Main$initialModel = function (numberOfFrogs) {
-	return {
-		slots: A2(
+	var slots = A2(
+		_elm_lang$core$Basics_ops['++'],
+		A2(_elm_lang$core$List$repeat, numberOfFrogs, _user$project$Main$LeftFrog),
+		A2(
 			_elm_lang$core$Basics_ops['++'],
-			A2(_elm_lang$core$List$repeat, numberOfFrogs, _user$project$Main$LeftFrog),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				{
-					ctor: '::',
-					_0: _user$project$Main$Space,
-					_1: {ctor: '[]'}
-				},
-				A2(_elm_lang$core$List$repeat, numberOfFrogs, _user$project$Main$RightFrog))),
+			{
+				ctor: '::',
+				_0: _user$project$Main$Space,
+				_1: {ctor: '[]'}
+			},
+			A2(_elm_lang$core$List$repeat, numberOfFrogs, _user$project$Main$RightFrog)));
+	return {
+		slots: slots,
 		msg: A2(
 			_elm_lang$core$Basics_ops['++'],
 			'Click on a frog to make it move. Frogs can only ',
 			A2(_elm_lang$core$Basics_ops['++'], 'move in the direction they are facing and only to an ', 'adjacent open space or over another frog to the space.')),
 		previousStates: {ctor: '[]'},
 		numberOfMoves: 0,
-		numberOfFrogs: numberOfFrogs
+		numberOfFrogs: numberOfFrogs,
+		goal: _elm_lang$core$List$reverse(slots)
 	};
 };
 var _user$project$Main$init = {
@@ -10631,38 +10641,38 @@ var _user$project$Main$init = {
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p10 = msg;
-		switch (_p10.ctor) {
+		var _p11 = msg;
+		switch (_p11.ctor) {
 			case 'ChangeNumberOfFrogs':
-				var _p11 = _elm_lang$core$String$toInt(_p10._0);
-				if (_p11.ctor === 'Ok') {
-					var _p15 = _p11._0;
+				var _p12 = _elm_lang$core$String$toInt(_p11._0);
+				if (_p12.ctor === 'Ok') {
+					var _p16 = _p12._0;
 					var max = function () {
-						var _p12 = _elm_lang$core$List$head(
+						var _p13 = _elm_lang$core$List$head(
 							_elm_lang$core$List$reverse(_user$project$Main$rangeOfFrogs));
-						if (_p12.ctor === 'Just') {
-							return _p12._0;
-						} else {
-							return 0;
-						}
-					}();
-					var min = function () {
-						var _p13 = _elm_lang$core$List$head(_user$project$Main$rangeOfFrogs);
 						if (_p13.ctor === 'Just') {
 							return _p13._0;
 						} else {
 							return 0;
 						}
 					}();
-					var _p14 = {
+					var min = function () {
+						var _p14 = _elm_lang$core$List$head(_user$project$Main$rangeOfFrogs);
+						if (_p14.ctor === 'Just') {
+							return _p14._0;
+						} else {
+							return 0;
+						}
+					}();
+					var _p15 = {
 						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.cmp(_p15, min) > -1,
-						_1: _elm_lang$core$Native_Utils.cmp(_p15, max) < 1
+						_0: _elm_lang$core$Native_Utils.cmp(_p16, min) > -1,
+						_1: _elm_lang$core$Native_Utils.cmp(_p16, max) < 1
 					};
-					if (((_p14.ctor === '_Tuple2') && (_p14._0 === true)) && (_p14._1 === true)) {
+					if (((_p15.ctor === '_Tuple2') && (_p15._0 === true)) && (_p15._1 === true)) {
 						return {
 							ctor: '_Tuple2',
-							_0: _user$project$Main$initialModel(_p15),
+							_0: _user$project$Main$initialModel(_p16),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					} else {
@@ -10679,7 +10689,7 @@ var _user$project$Main$update = F2(
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{msg: _p11._0}),
+							{msg: _p12._0}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				}
@@ -10693,8 +10703,8 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Undo':
-				var _p16 = _elm_lang$core$List$length(model.previousStates);
-				if (_p16 === 0) {
+				var _p17 = _elm_lang$core$List$length(model.previousStates);
+				if (_p17 === 0) {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -10718,17 +10728,17 @@ var _user$project$Main$update = F2(
 					};
 				}
 			default:
-				var _p19 = _p10._0;
-				var _p17 = A2(_user$project$Main$handleClick, _p19, model.slots);
-				var newSlots = _p17._0;
-				var errorMsg = _p17._1;
+				var _p20 = _p11._0;
+				var _p18 = A2(_user$project$Main$handleClick, _p20, model.slots);
+				var newSlots = _p18._0;
+				var errorMsg = _p18._1;
 				var newMessage = function () {
-					var _p18 = errorMsg;
-					if (_p18 === '') {
+					var _p19 = errorMsg;
+					if (_p19 === '') {
 						return A2(
 							_elm_lang$core$Basics_ops['++'],
 							'Move frog ',
-							_elm_lang$core$Basics$toString(_p19));
+							_elm_lang$core$Basics$toString(_p20));
 					} else {
 						return errorMsg;
 					}
@@ -10758,8 +10768,8 @@ var _user$project$Main$SlotClick = function (a) {
 var _user$project$Main$viewSlot = F2(
 	function (index, slot) {
 		var imgName = function () {
-			var _p20 = slot;
-			switch (_p20.ctor) {
+			var _p21 = slot;
+			switch (_p21.ctor) {
 				case 'LeftFrog':
 					return 'left-frog.png';
 				case 'RightFrog':
@@ -10911,7 +10921,19 @@ var _user$project$Main$view = function (model) {
 										_1: {ctor: '[]'}
 									}
 								}),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(
+											_user$project$Main$wonYet(model)),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
