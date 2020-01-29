@@ -1,11 +1,14 @@
-module Main exposing (..)
+module Main exposing (Model, Msg(..), Slot(..), SlotNum, defaultNumberOfFrogs, handleClick, init, initialModel, leftFrogLeap, main, numberOption, rangeOfFrogs, rightFrogLeap, subscriptions, update, view, viewSlot, viewSlots, wonYet)
 
+import Browser
+import Browser.Navigation as Nav
 import Debug
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Http
 import List.Extra
+import Url
 
 
 type Slot
@@ -65,13 +68,14 @@ defaultNumberOfFrogs =
     3
 
 
-init : ( Model, Cmd Msg )
-init =
+init : flags -> ( Model, Cmd Msg )
+init flags =
     ( initialModel defaultNumberOfFrogs, Cmd.none )
 
 
+main : Program () Model Msg
 main =
-    Html.program
+    Browser.document
         { init = init
         , view = view
         , update = update
@@ -83,29 +87,31 @@ numberOption : Int -> Html msg
 numberOption n =
     let
         v =
-            toString n
+            String.fromInt n
     in
     option [ value v ] [ text v ]
 
 
-view : Model -> Html Msg
+view : Model -> Browser.Document Msg
 view model =
-    div []
-        [ div [] [ viewSlots model.slots ]
-        , div [] [ text model.msg ]
-        , div []
-            [ text "Number of frogs: "
-            , select [ onInput ChangeNumberOfFrogs ] (List.map numberOption (List.range 3 5))
+    { title = "Frogs"
+    , body =
+        [ div []
+            [ div [] [ viewSlots model.slots ]
+            , div [] [ text model.msg ]
+            , div []
+                [ text "Number of frogs: "
+                , select [ onInput ChangeNumberOfFrogs ] (List.map numberOption (List.range 3 5))
+                ]
+            , div [] [ text ("Number of moves: " ++ String.fromInt model.numberOfMoves) ]
+            , div []
+                [ button [ onClick Undo ] [ text "Undo" ]
+                , button [ onClick Reset ] [ text "Reset" ]
+                ]
+            , div [] [ text (wonYet model) ]
             ]
-        , div [] [ text ("Number of moves: " ++ toString model.numberOfMoves) ]
-        , div []
-            [ button [ onClick Undo ] [ text "Undo" ]
-            , button [ onClick Reset ] [ text "Reset" ]
-            ]
-        , div [] [ text (wonYet model) ]
-
-        -- , div [] [ text <| "Model: " ++ toString model ]
         ]
+    }
 
 
 wonYet model =
@@ -138,15 +144,26 @@ viewSlot index slot =
 
                 Space ->
                     "space.png"
+
+        altText =
+            case slot of
+                LeftFrog ->
+                    "Left"
+
+                RightFrog ->
+                    "Right"
+
+                Space ->
+                    "Space"
     in
     td []
         [ img
-            [ src ("http://imicrobe.us/img/" ++ imgName)
-            , alt (toString slot)
+            [ src ("./img/" ++ imgName)
+            , alt altText
             , onClick (SlotClick index)
             ]
             []
-        , text (toString index)
+        , text (String.fromInt index)
         ]
 
 
@@ -261,11 +278,12 @@ handleClick index slots =
 -- UPDATE
 
 
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ChangeNumberOfFrogs n ->
             case String.toInt n of
-                Ok i ->
+                Just i ->
                     let
                         min =
                             case List.head rangeOfFrogs of
@@ -290,8 +308,8 @@ update msg model =
                         _ ->
                             ( { model | msg = "Not a good number of frogs." }, Cmd.none )
 
-                Err err ->
-                    ( { model | msg = err }, Cmd.none )
+                Nothing ->
+                    ( { model | msg = "Cannot convert " ++ n ++ " an integer" }, Cmd.none )
 
         Reset ->
             let
@@ -327,7 +345,7 @@ update msg model =
                 newMessage =
                     case errorMsg of
                         "" ->
-                            "Move frog " ++ toString index
+                            "Move frog " ++ String.fromInt index
 
                         _ ->
                             errorMsg
